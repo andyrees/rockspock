@@ -10,7 +10,7 @@ import (
 	"time"
 )
 
-func generate_computer_choice() (choice string, err error) {
+func generateComputerChoice() (choice string, err error) {
 	choices := []string{"rock", "paper", "scissors", "lizard", "spock"}
 	rand.Seed(time.Now().Unix())
 	myindex := rand.Intn(4)
@@ -66,19 +66,18 @@ func winner(userchoice, computerchoice string) (int, string) {
 	default:
 		return 3, winner
 	}
-	return 3, winner
 }
 
-func who_won_then(userChoice string) int {
+func whoWonThen(userChoice string) int {
 	fmt.Println("You chose     : ", userChoice)
-	ch, err := generate_computer_choice()
+	ch, err := generateComputerChoice()
 	if err != nil {
 		log.Fatalln(err)
 	}
 	fmt.Println("Computer chose: ", ch)
-	who_won, win_string := winner(strings.ToLower(userChoice), ch)
-	fmt.Printf("-----\n%s\n", win_string)
-	return who_won
+	whoWon, winString := winner(strings.ToLower(userChoice), ch)
+	fmt.Printf("-----\n%s\n", winString)
+	return whoWon
 }
 
 func stringInSlice(a string) bool {
@@ -92,32 +91,32 @@ func stringInSlice(a string) bool {
 }
 
 func main() {
-	user_score := 0
-	computer_score := 0
-	draw_score := 0
+	userScore := 0
+	computerScore := 0
+	drawScore := 0
 	fmt.Println("Choose: Rock | Paper | Scissors | Lizard | Spock | Quit")
 
 	scanner := bufio.NewScanner(os.Stdin)
 	for scanner.Scan() {
-		user_choice := strings.ToLower(scanner.Text())
-		if user_choice == "quit" {
+		userChoice := strings.ToLower(scanner.Text())
+		if userChoice == "quit" {
 			fmt.Println("Good Game")
-			fmt.Printf("User: %d, Computer: %d, Draw: %d\n", user_score, computer_score, draw_score)
+			fmt.Printf("User: %d, Computer: %d, Draw: %d\n", userScore, computerScore, drawScore)
 			return
-		} else if stringInSlice(user_choice) {
-			score := who_won_then(user_choice)
+		} else if stringInSlice(userChoice) {
+			score := whoWonThen(userChoice)
 			switch score {
 			case 1:
-				user_score = user_score + 1
+				userScore = userScore + 1
 			case 2:
-				computer_score = computer_score + 1
+				computerScore = computerScore + 1
 			case 3:
-				draw_score = draw_score + 1
+				drawScore = drawScore + 1
 			}
 		} else {
 			fmt.Println("Choose: Rock | Paper | Scissors | Lizard | Spock | Quit")
 		}
-		fmt.Printf("User: %d, Computer: %d, Draw: %d\n", user_score, computer_score, draw_score)
+		fmt.Printf("User: %d, Computer: %d, Draw: %d\n", userScore, computerScore, drawScore)
 		fmt.Println("")
 	}
 
